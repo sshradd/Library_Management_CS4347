@@ -4,14 +4,27 @@ import Link from "next/link";
 import { useState } from "react";
 
 
-export default function Login() {
+export default function SignUp() {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="text-center">
         <div className="my-8">
-          <h1 className="text-5xl font-bold">Login</h1>
+          <h1 className="text-5xl font-bold">Sign Up</h1>
         </div>
 
+        <form className="flex flex-col space-y-4">
+          <div className="flex flex-col">
+            <label htmlFor="email" className="text-left font-bold">
+              Full Name
+            </label>
+            <input
+              className="border p-2 rounded-lg mb-4"
+              type="fullname"
+              name="fullname"
+            ></input>
+          </div>
+        </form>
+        
         <form className="flex flex-col space-y-4">
           <div className="flex flex-col">
             <label htmlFor="email" className="text-left font-bold">
@@ -37,17 +50,12 @@ export default function Login() {
             ></input>
           </div>
           <Link className="bg-blue-500 text-white p-2 rounded-lg text-center" href="/">
-            {"Enter!"}
+            {"Welcome!"}
           </Link>
         </form>
         <div className="mt-2">
           <Link className="text-gray-400" href="/">
-            {"Forgot password?"}
-          </Link>
-        </div>
-        <div>
-          <Link className="text-blue-500" href="/">
-            {"Don't have an account? Sign up!"}
+            {"Already have an account? Login!"}
           </Link>
         </div>
       </div>
