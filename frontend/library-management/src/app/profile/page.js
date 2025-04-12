@@ -1,95 +1,77 @@
 import Image from "next/image";
+import { IoPersonCircleOutline } from "react-icons/io5";
+import Book_Item from "../components/book_item";
 
 export default function Profile() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid grid-rows-[20px_1fr_20px] items-start justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            THIS IS A SAMPLE PAGE TO SHOW NAVIGATION{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
+        <div className="flex gap-4 items-center flex-row">
+          <IoPersonCircleOutline className="text-8xl" />
+          
+          <div className="flex flex-col w-full">
+            <h1 className="text-5xl font-bold">Firstname Lastname</h1>
+            <h2 className="text-2xl font-bold">ID: 123456789</h2>
+          </div>
+        </div>
+
+        <h1 className="text-3xl font-bold outline-4 p-2.5 rounded-2xl">
+          Transaction History
+        </h1>
+        <ol className="list-inside list-item text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)] outline-4 p-5 rounded-2xl space-y-4">
+          
+          <li className="tracking-[-.01em] flex items-start flex-row justify-items-center gap-4">
+            <Image
+              className="dark:invert rounded-3xl"
+              src="/book_pic.png"
+              alt="Book image"
+              width={100}
+              height={100}
+            />
+            <div className="flex flex-col w-full">
+              <div className="flex justify-between w-full gap-80">
+                <p className="text-2xl font-bold ">Book Title</p>
+                <p className="text-xl font whitespace-nowrap justify-end">
+                  Checked Out: MM/DD/YY
+                </p>
+              </div>
+              <div className="flex justify-between w-full gap-80">
+                <p className="text-xl font-bold">Author: First, Last</p>
+                <p className="text-xl font whitespace-nowrap justify-end">
+                  Return By: MM/DD/YY
+                </p>
+              </div>
+            </div>
           </li>
-          <li className="tracking-[-.01em]">
-            THIS IS THE PROFILE PAGE
+          <li className="tracking-[-.01em] flex items-start flex-row justify-items-center gap-4">
+            <Image
+              className="dark:invert rounded-3xl"
+              src="/book_pic.png"
+              alt="Book image"
+              width={100}
+              height={100}
+            />
+            <div className="flex flex-col w-full">
+              <div className="flex justify-between w-full gap-80">
+                <p className="text-2xl font-bold ">Book Title</p>
+                <p className="text-xl font whitespace-nowrap justify-end">
+                  Checked Out: MM/DD/YY
+                </p>
+              </div>
+              <div className="flex justify-between w-full gap-80">
+                <p className="text-xl font-bold">Author: First, Last</p>
+                <p className="text-xl font whitespace-nowrap justify-end">
+                  Return By: MM/DD/YY
+                </p>
+              </div>
+            </div>
           </li>
         </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+    
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+        
       </footer>
     </div>
   );
