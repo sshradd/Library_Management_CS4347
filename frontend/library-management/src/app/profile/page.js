@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { IoPersonCircleOutline } from "react-icons/io5";
-//import Book_Item from "../components/book_item";
 
 export default function Profile() {
   return (
