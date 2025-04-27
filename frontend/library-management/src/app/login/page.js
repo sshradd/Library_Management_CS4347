@@ -36,12 +36,12 @@ export default function Login() {
               name="password"
             ></input>
           </div>
-          <Link className="bg-blue-500 text-white p-2 rounded-lg text-center" href="/">
+          <Link className="bg-blue-500 text-white p-2 rounded-lg text-center" href="/librarycatalog">
             {"Enter!"}
           </Link>
         </form>
         <div className="mt-2">
-          <Link className="text-gray-400" href="/">
+          <Link className="text-red-500" href="/forgotpassword">
             {"Forgot password?"}
           </Link>
         </div>

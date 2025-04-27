@@ -36,8 +36,8 @@ export default function ForgotPassword() {
           ></input>
         </form>
         <div className="mt-4">
-          <Link className="text-gray-600" href="/">
-            {"< Back"}
+          <Link className="text-gray-600" href="/login">
+            {"< Back"}a
           </Link>
         </div>
       </div>
