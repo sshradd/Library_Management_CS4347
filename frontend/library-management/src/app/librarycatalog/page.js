@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import CatalogItem from "../components/CatalogItem";
+import Link from 'next/link';
+
 
 export default function LibraryCatalog() {
   const [author, setAuthor] = useState("");
@@ -26,10 +28,10 @@ export default function LibraryCatalog() {
   return (
     <div>
     
-      <div className="flex flex-row items-center gap-2 text-[24px] cursor-pointer hover:text-blue-600 transition justify-end py-5">
-        <span className="font-semibold">Check Out</span>
-        <FaShoppingCart size={28} />
-      </div>
+    <Link href="/checkOut" className="flex flex-row items-center gap-2 text-[24px] cursor-pointer hover:text-blue-600 transition justify-end py-5">
+      <span className="font-semibold">Check Out</span>
+      <FaShoppingCart size={28} />
+    </Link>
       <div className="flex justify-center min-h-screen">
         <div className="text-center">
           <h1 className="text-5xl font-bold my-8">Library Catalog</h1>
@@ -92,7 +94,7 @@ export default function LibraryCatalog() {
             </div>
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+              className="bg-black text-white px-4 py-2 rounded-lg hover:bg-blue-700"
             >
               Search
             </button>
