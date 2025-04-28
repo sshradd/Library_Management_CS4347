@@ -1,8 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import CatalogItem from "../components/CatalogItem";
+import {
+  CatalogItemBook,
+  CatalogItemDVD,
+  CatalogItemMagazine,
+} from "../components/CatalogItem";
 
 export default function LibraryCatalog() {
   const [author, setAuthor] = useState("");
@@ -11,21 +15,42 @@ export default function LibraryCatalog() {
   const [language, setLanguage] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  const [catalogItems, setCatalogItems] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/getCatalog.php");
+
+      if (!response.ok) {
+        throw new Error("Response not ok");
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      setCatalogItems(data);
+
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle search logic here
     if (author && title && year && language) {
       setSubmitted(true);
       console.log({ author, title, year, language });
-      
     }
-
-  }
-
+  };
 
   return (
     <div>
-    
       <div className="flex flex-row items-center gap-2 text-[24px] cursor-pointer hover:text-blue-600 transition justify-end py-5">
         <span className="font-semibold">Check Out</span>
         <FaShoppingCart size={28} />
@@ -97,15 +122,44 @@ export default function LibraryCatalog() {
               Search
             </button>
           </form>
-            <CatalogItem
-              author={author}
-              title={title}
-              year={year}
-              language={language}
-            />
+          {catalogItems.map((item, index) => (
+            <div key={index} className="mb-4">
+              {item.BookID ? (
+                <CatalogItemBook
+                  title={item.Title}
+                  date={item.PublicationDate}
+                  language={item.Language}
+                  imageUrl={item.ImageUrl}
+                  isbn={item.ISBN}
+                  author={item.AuthorName}
+                />
+              ) : item.DvdID ? (
+                <CatalogItemDVD
+                  title={item.Title}
+                  date={item.PublicationDate}
+                  language={item.Language}
+                  imageUrl={item.ImageUrl}
+                  publisher={item.DvdPublisher}
+                  duration={item.Duration}
+                  format={item.Format}
+                />
+              ) : item.MagazineID ? (
+                <CatalogItemMagazine
+                  title={item.Title}
+                  date={item.PublicationDate}
+                  language={item.Language}
+                  imageUrl={item.ImageUrl}
+                  publisher={item.MagazinePublisher}
+                  issue={item.Issue}
+                  nameplate={item.Nameplate}
+                />
+              ) : (
+                <div>No item type found</div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
-
 }
