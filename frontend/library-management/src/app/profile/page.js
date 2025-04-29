@@ -61,6 +61,41 @@ export default function Profile() {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.Email) {
+      alert("No user found");
+      return;
+    }
+
+    const confirmDelete = confirm(
+      "Are you sure you want to delete your account?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch("http://localhost:8000/api/deleteacc.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: user.Email }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        alert("Account deleted successfully.");
+        localStorage.removeItem("user");
+        window.location.href = "/";
+      } else {
+        alert("Error: " + data.error);
+      }
+    } catch (error) {
+      console.error("Delete error:", error);
+      alert("Error");
+    }
+  };
+
   if (errorMessage) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -161,6 +196,14 @@ export default function Profile() {
             <p>None</p>
           )}
         </ol>
+        <div className="w-full flex justify-center">
+          <button
+            className="mt-4 px-6 py-3 bg-black text-white text-lg font-semibold rounded-xl hover:bg-blue-700 transition"
+            onClick={handleDeleteAccount}
+          >
+            Delete Account
+          </button>
+        </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>
     </div>
