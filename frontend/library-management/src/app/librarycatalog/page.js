@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaShoppingCart } from "react-icons/fa";
 import {
   CatalogItemBook,
   CatalogItemDVD,
@@ -49,12 +48,14 @@ export default function LibraryCatalog() {
     }
   };
 
+  const handleAddToCart = (item) => {
+    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+    localStorage.setItem("cart", JSON.stringify([...existingCart, item]));
+    alert(`${item.Title} added to cart!`);
+  };
+
   return (
     <div>
-      <div className="flex flex-row items-center gap-2 text-[24px] cursor-pointer hover:text-blue-600 transition justify-end py-5">
-        <span className="font-semibold">Check Out</span>
-        <FaShoppingCart size={28} />
-      </div>
       <div className="flex justify-center min-h-screen">
         <div className="text-center">
           <h1 className="text-5xl font-bold my-8">Library Catalog</h1>
@@ -123,39 +124,51 @@ export default function LibraryCatalog() {
             </button>
           </form>
           {catalogItems.map((item, index) => (
-            <div key={index} className="mb-4">
-              {item.BookID ? (
-                <CatalogItemBook
-                  title={item.Title}
-                  date={item.PublicationDate}
-                  language={item.Language}
-                  imageUrl={item.ImageUrl}
-                  isbn={item.ISBN}
-                  author={item.AuthorName}
-                />
-              ) : item.DvdID ? (
-                <CatalogItemDVD
-                  title={item.Title}
-                  date={item.PublicationDate}
-                  language={item.Language}
-                  imageUrl={item.ImageUrl}
-                  publisher={item.DvdPublisher}
-                  duration={item.Duration}
-                  format={item.Format}
-                />
-              ) : item.MagazineID ? (
-                <CatalogItemMagazine
-                  title={item.Title}
-                  date={item.PublicationDate}
-                  language={item.Language}
-                  imageUrl={item.ImageUrl}
-                  publisher={item.MagazinePublisher}
-                  issue={item.Issue}
-                  nameplate={item.Nameplate}
-                />
-              ) : (
-                <div>No item type found</div>
-              )}
+            <div
+              key={index}
+              className="mb-4 flex items-center justify-between p-4"
+            >
+              <div className="flex-1">
+                {item.BookID ? (
+                  <CatalogItemBook
+                    title={item.Title}
+                    date={item.PublicationDate}
+                    language={item.Language}
+                    imageUrl={item.ImageUrl}
+                    isbn={item.ISBN}
+                    author={item.AuthorName}
+                  />
+                ) : item.DvdID ? (
+                  <CatalogItemDVD
+                    title={item.Title}
+                    date={item.PublicationDate}
+                    language={item.Language}
+                    imageUrl={item.ImageUrl}
+                    publisher={item.DvdPublisher}
+                    duration={item.Duration}
+                    format={item.Format}
+                  />
+                ) : item.MagazineID ? (
+                  <CatalogItemMagazine
+                    title={item.Title}
+                    date={item.PublicationDate}
+                    language={item.Language}
+                    imageUrl={item.ImageUrl}
+                    publisher={item.MagazinePublisher}
+                    issue={item.Issue}
+                    nameplate={item.Nameplate}
+                  />
+                ) : (
+                  <div>No item type found</div>
+                )}
+              </div>
+
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 ml-4"
+                onClick={() => handleAddToCart(item)}
+              >
+                Add to Cart
+              </button>
             </div>
           ))}
         </div>

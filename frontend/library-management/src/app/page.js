@@ -39,7 +39,7 @@ export default function Home() {
       const data = await response.json();
 
       if (data.success) {
-        localStorage.setItem("user", JSON.stringify(data.data));
+        localStorage.setItem("user", JSON.stringify(data.data[0]));
         setIsLoggedIn(true);
         router.push("/librarycatalog");
       } else {

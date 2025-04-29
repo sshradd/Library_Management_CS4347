@@ -52,7 +52,7 @@ if ($profileResult) {
 
 // get transaction info
 $getTransactions = "
-    SELECT t.TransactionID, t.BorrowDate, t.DueByDate, t.ReturnedDate, c.Title 
+    SELECT t.TransactionID, t.BorrowDate, t.DueByDate, t.ReturnedDate, c.Title, c.ImageUrl
     FROM LIBRARY_TRANSACTION t
     JOIN LIBRARY_TRANSACTION_ITEM ti ON t.TransactionID = ti.TransactionID
     JOIN CATALOG_ITEM c ON ti.CatalogID = c.CatalogID

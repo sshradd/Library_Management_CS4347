@@ -27,16 +27,39 @@ export default function Profile() {
           setTransactions(data.data.transactions);
           console.log(data.data.transactions);
         } else {
-          setErrorMessage(data.error || "Error fetching profile data.");
+          setErrorMessage(data.error || "Error fetching");
         }
       } catch (error) {
-        setErrorMessage("An error occurred while fetching the profile.");
-        console.error("Error during profile fetch:", error);
+        setErrorMessage("Error");
+        console.error("Error fetching:", error);
       }
     };
 
     fetchProfileData();
   }, []);
+
+  const handleCheckin = async (transactionID) => {
+    try {
+      const response = await fetch("http://localhost:8000/api/checkin.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ transactionID }),
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Book checked in successfully!");
+        window.location.reload();
+      } else {
+        alert("Error checking in: " + data.message);
+      }
+    } catch (error) {
+      console.error("Checkin error:", error);
+      alert("An error occurred while checking in.");
+    }
+  };
 
   if (errorMessage) {
     return (
@@ -66,7 +89,7 @@ export default function Profile() {
     acc[item.TransactionID].push(item);
     return acc;
   }, {});
-  const transactionArray = Object.values(groupedTransactions).reverse();
+  const transactionArray = Object.values(groupedTransactions);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-start justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -90,38 +113,48 @@ export default function Profile() {
             transactionArray.map((transactionItems, index) => (
               <li key={index} className="space-y-4">
                 <h2 className="text-2xl font-bold">Transaction {index + 1}</h2>
-                {transactionItems.map((item, index) => (
-                  <div
-                    key={index}
-                    className="tracking-[-.01em] flex items-start flex-row justify-items-center gap-4"
-                  >
-                    <Image
-                      className="dark:invert rounded-3xl"
-                      src={item.ImageUrl || "/book_pic.png"}
-                      alt={`${item.Title} image`}
-                      width={100}
-                      height={100}
-                    />
-                    <div className="flex flex-col w-full">
-                      <div className="flex justify-between w-full gap-80">
-                        <p className="text-2xl font-bold">{item.Title}</p>
-                        <p className="text-xl font whitespace-nowrap justify-end">
-                          Checked Out: {item.BorrowDate}
-                        </p>
-                      </div>
-                      <div className="flex justify-between w-full gap-80">
-                        {item.AuthorName && (
-                          <p className="text-xl font-bold">
-                            Author: {item.AuthorName}
+                {transactionItems.map((item, index) => {
+                  const isReturned = item.ReturnedDate !== null;
+                  return (
+                    <div
+                      key={index}
+                      className="tracking-[-.01em] flex items-start flex-row justify-items-center gap-4"
+                    >
+                      <Image
+                        className="dark:invert rounded-3xl"
+                        src={item.ImageUrl || "/book_pic.png"}
+                        alt={`${item.Title} image`}
+                        width={100}
+                        height={100}
+                      />
+                      <div className="flex flex-col w-full">
+                        <div className="flex justify-between w-full gap-80">
+                          <p className="text-2xl font-bold">{item.Title}</p>
+                          <p className="text-xl font whitespace-nowrap justify-end">
+                            Checked Out: {item.BorrowDate}
                           </p>
-                        )}
-                        <p className="text-xl font whitespace-nowrap justify-end">
-                          Return By: {item.DueByDate}
-                        </p>
+                        </div>
+                        <div className="flex justify-between w-full gap-80">
+                          <p className="text-xl font whitespace-nowrap justify-end">
+                            Return By: {item.DueByDate}
+                          </p>
+                          {isReturned ? (
+                            <p className="text-xl font-semibold text-green-500">
+                              Checked In
+                            </p>
+                          ) : (
+                            <button
+                              className="text-xl font-semibold text-blue-500 cursor-pointer hover:underline hover:text-blue-700"
+                              onClick={() => handleCheckin(item.TransactionID)}
+                            >
+                              Checkin
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </li>
             ))
           ) : (
