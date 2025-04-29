@@ -6,43 +6,15 @@ import {
   CatalogItemDVD,
   CatalogItemMagazine,
 } from "../components/CatalogItem";
-import Link from "next/link";
-
-// Sample data for the catalog
-const books = [
-  {
-    id: 1,
-    author: "J.K. Rowling",
-    title: "Harry Potter and the Sorcerer's Stone",
-    year: 1997,
-    language: "English",
-  },
-  {
-    id: 2,
-    author: "George Orwell",
-    title: "1984",
-    year: 1949,
-    language: "English",
-  },
-  {
-    id: 3,
-    author: "Gabriel García Márquez",
-    title: "One Hundred Years of Solitude",
-    year: 1967,
-    language: "Spanish",
-  },
-  // Add more book objects or fetch from an API
-];
 
 export default function LibraryCatalog() {
-  // Search input state variables
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
   const [language, setLanguage] = useState("");
 
   // State for filtered results
-  const [filteredBooks, setFilteredBooks] = useState(books);
+  const [filteredBooks, setFilteredBooks] = useState([]);
 
   const [catalogItems, setCatalogItems] = useState([]);
 
@@ -62,6 +34,7 @@ export default function LibraryCatalog() {
       console.log(data);
 
       setCatalogItems(data);
+      setFilteredBooks(data);
 
       return data;
     } catch (error) {
@@ -72,16 +45,26 @@ export default function LibraryCatalog() {
   // Filter logic on form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    const results = books.filter((book) => {
+    const results = catalogItems.filter((book) => {
       const matchesAuthor =
         author === "" ||
-        book.author.toLowerCase().includes(author.toLowerCase());
+        (book.AuthorName &&
+          book.AuthorName.toLowerCase().includes(author.toLowerCase())) ||
+        (book.DvdPublisher &&
+          book.DvdPublisher.toLowerCase().includes(author.toLowerCase())) ||
+        (book.MagazinePublisher &&
+          book.MagazinePublisher.toLowerCase().includes(author.toLowerCase()));
       const matchesTitle =
-        title === "" || book.title.toLowerCase().includes(title.toLowerCase());
-      const matchesYear = year === "" || book.year === Number(year);
+        title === "" ||
+        (book.Title && book.Title.toLowerCase().includes(title.toLowerCase()));
+      const matchesYear =
+        year === "" ||
+        (book.PublicationDate &&
+          new Date(book.PublicationDate).getFullYear() === Number(year));
       const matchesLanguage =
         language === "" ||
-        book.language.toLowerCase().includes(language.toLowerCase());
+        (book.Language &&
+          book.Language.toLowerCase().includes(language.toLowerCase()));
       return matchesAuthor && matchesTitle && matchesYear && matchesLanguage;
     });
     setFilteredBooks(results);
@@ -95,15 +78,6 @@ export default function LibraryCatalog() {
 
   return (
     <div>
-      <Link
-        href="/checkOut"
-        className="flex justify-end items-center gap-2 text-[24px] cursor-pointer hover:text-blue-600 transition py-5"
-      >
-        <span className="font-semibold">Check Out</span>
-        <FaShoppingCart size={28} />
-      </Link>
-
-      {/* Expand container width */}
       <div className="flex justify-center min-h-screen px-4">
         <div className="w-full max-w-5xl">
           <h1 className="text-center text-5xl font-bold my-8">
@@ -172,7 +146,7 @@ export default function LibraryCatalog() {
               </button>
             </div>
           </form>
-          {catalogItems.map((item, index) => (
+          {filteredBooks.map((item, index) => (
             <div
               key={index}
               className="mb-4 flex items-center justify-between p-4"
