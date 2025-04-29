@@ -6,13 +6,43 @@ import {
   CatalogItemDVD,
   CatalogItemMagazine,
 } from "../components/CatalogItem";
+import Link from "next/link";
+
+// Sample data for the catalog
+const books = [
+  {
+    id: 1,
+    author: "J.K. Rowling",
+    title: "Harry Potter and the Sorcerer's Stone",
+    year: 1997,
+    language: "English",
+  },
+  {
+    id: 2,
+    author: "George Orwell",
+    title: "1984",
+    year: 1949,
+    language: "English",
+  },
+  {
+    id: 3,
+    author: "Gabriel García Márquez",
+    title: "One Hundred Years of Solitude",
+    year: 1967,
+    language: "Spanish",
+  },
+  // Add more book objects or fetch from an API
+];
 
 export default function LibraryCatalog() {
+  // Search input state variables
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
   const [language, setLanguage] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+
+  // State for filtered results
+  const [filteredBooks, setFilteredBooks] = useState(books);
 
   const [catalogItems, setCatalogItems] = useState([]);
 
@@ -39,13 +69,22 @@ export default function LibraryCatalog() {
     }
   };
 
+  // Filter logic on form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle search logic here
-    if (author && title && year && language) {
-      setSubmitted(true);
-      console.log({ author, title, year, language });
-    }
+    const results = books.filter((book) => {
+      const matchesAuthor =
+        author === "" ||
+        book.author.toLowerCase().includes(author.toLowerCase());
+      const matchesTitle =
+        title === "" || book.title.toLowerCase().includes(title.toLowerCase());
+      const matchesYear = year === "" || book.year === Number(year);
+      const matchesLanguage =
+        language === "" ||
+        book.language.toLowerCase().includes(language.toLowerCase());
+      return matchesAuthor && matchesTitle && matchesYear && matchesLanguage;
+    });
+    setFilteredBooks(results);
   };
 
   const handleAddToCart = (item) => {
@@ -56,72 +95,82 @@ export default function LibraryCatalog() {
 
   return (
     <div>
-      <div className="flex justify-center min-h-screen">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold my-8">Library Catalog</h1>
-          <form className="flex flex-row space-x-4 items-center">
-            <div className="flex flex-col text-left w-64">
-              <label htmlFor="author" className="font-bold">
+      <Link
+        href="/checkOut"
+        className="flex justify-end items-center gap-2 text-[24px] cursor-pointer hover:text-blue-600 transition py-5"
+      >
+        <span className="font-semibold">Check Out</span>
+        <FaShoppingCart size={28} />
+      </Link>
+
+      {/* Expand container width */}
+      <div className="flex justify-center min-h-screen px-4">
+        <div className="w-full max-w-5xl">
+          <h1 className="text-center text-5xl font-bold my-8">
+            Library Catalog
+          </h1>
+
+          {/* Search Form */}
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0"
+          >
+            <div className="flex flex-col w-full md:w-80">
+              <label htmlFor="author" className="font-bold mb-1">
                 Author
               </label>
               <input
                 id="author"
                 type="text"
-                name="author"
-                className="border p-2 rounded-lg mb-4"
+                className="h-12 border px-4 rounded-lg"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
-                required
               />
             </div>
-            <div className="flex flex-col text-left w-64">
-              <label htmlFor="title" className="font-bold">
+            <div className="flex flex-col w-full md:w-80">
+              <label htmlFor="title" className="font-bold mb-1">
                 Title
               </label>
               <input
                 id="title"
                 type="text"
-                name="title"
-                className="border p-2 rounded-lg mb-4"
+                className="h-12 border px-4 rounded-lg"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                required
               />
             </div>
-            <div className="flex flex-col text-left w-32">
-              <label htmlFor="year" className="font-bold">
+            <div className="flex flex-col w-full md:w-32">
+              <label htmlFor="year" className="font-bold mb-1">
                 Year
               </label>
               <input
                 id="year"
                 type="number"
-                name="year"
-                className="border p-2 rounded-lg mb-4"
+                className="h-12 border px-4 rounded-lg"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
-                required
               />
             </div>
-            <div className="flex flex-col text-left w-32">
-              <label htmlFor="year" className="font-bold">
+            <div className="flex flex-col w-full md:w-32">
+              <label htmlFor="language" className="font-bold mb-1">
                 Language
               </label>
               <input
                 id="language"
                 type="text"
-                name="language"
-                className="border p-2 rounded-lg mb-4"
+                className="h-12 border px-4 rounded-lg"
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
-                required
               />
             </div>
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Search
-            </button>
+            <div className="flex flex-col w-full md:w-auto md:self-end">
+              <button
+                type="submit"
+                className="h-12 border px-4 rounded-lg bg-black text-white whitespace-nowrap hover:bg-blue-700 flex items-center justify-center"
+              >
+                Search
+              </button>
+            </div>
           </form>
           {catalogItems.map((item, index) => (
             <div
