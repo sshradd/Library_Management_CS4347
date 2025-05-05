@@ -5,21 +5,25 @@ How to Install (on Windows)
 Next.js/website
 Clone the git repository
 git clone https://github.com/sshradd/Library_Management_CS4347
+
 run: npm install
 To download all packages
 cd frontend
 cd library-management
 npm run dev
 PHP
+
 Download php: https://windows.php.net/download/
 Download mysql 9.3
 Add php to system environment variables
 Go to “system variables”
+
 Select Path
 Click Edit
 Click browse and find the php folder you installed, and add it
 php.ini
 within the php folder, there should be a php.ini-development file
+
 Rename that file to php.ini
 Open php.ini
 Find ‘ ;extension_dir = "ext" ‘
@@ -29,6 +33,7 @@ Remove the ‘ ; ‘
 Save the file
 Open the terminal within the frontend/library-management/src/app folder
 Run php -S localhost:8000 in order to run the php database server
+
 MySQL
 Open mysql command line
 Login with the credentials:
@@ -36,6 +41,7 @@ Name: localhost
 Password: 1234
 Outside of the terminal, copy all of the csv files within the directory db/csv over to the ‘ ProgramData/MySQL/MySQL Server 9.3/Uploads/ ‘ folder
 Back to the mysql command line, run the commands:
+
 CREATE DATABASE librarymanagement;
 USE librarymanagement;
 SOURCE C:/Users/PUT_YOUR_PATH_TO_THE_APP/Library_Management_CS4347/frontend/library-management/src/db/create.sql;
@@ -55,6 +61,7 @@ Logging in or signing up redirects you to the catalog page.
 Catalog Page
 
 Navigate to the catalog page to browse, search for, and check-out books. 
+
 
 On the catalog page you can browse through the library’s vast collection of available books stored in our database. 
 If you are looking for a specific book, the catalog page has a search functionality where you can search for books using the title, author, publication year, or language. 
