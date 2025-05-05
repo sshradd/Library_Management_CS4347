@@ -4,15 +4,51 @@
 
 1. Clone the git repository
    - git clone https://github.com/sshradd/Library_Management_CS4347
-2. cd frontend
-3. cd library-management
-4. run: npm install
+2. run: npm install
    - To download all packages
+3. cd frontend
+4. cd library-management
 5. npm run dev
 
-**PHP** 6. Download php: https://windows.php.net/download/ 7. Download mysql 9.3 8. Add php to system environment variables - Go to “system variables” - Select Path - Click Edit - Click browse and find the php folder you installed, and add it 9. php.ini - within the php folder, there should be a php.ini-development file - Rename that file to php.ini - Open php.ini - Find ‘ ;extension_dir = "ext" ‘ - Remove the ‘ ; ‘ - Find ‘ ;extension=mysqli ‘ - Remove the ‘ ; ‘ - Save the file 10. Open the terminal within the frontend/library-management/src/app folder - Run php -S localhost:8000 in order to run the php database server
+**PHP**  
+6. Download php: https://windows.php.net/download/  
+7. Download mysql 9.3  
+8. Add php to system environment variables
 
-**MySQL** 11. Open mysql command line 12. Login with the credentials: - Name: localhost - Password: 1234 13. Outside of the terminal, copy all of the csv files within the directory db/csv over to the ‘ ProgramData/MySQL/MySQL Server 9.3/Uploads/ ‘ folder 14. Back to the mysql command line, run the commands: - CREATE DATABASE librarymanagement; - USE librarymanagement; - SOURCE C:/Users/PUT_YOUR_PATH_TO_THE_APP/Library_Management_CS4347/frontend/library-management/src/db/create.sql; - SOURCE C:/Users/PUT_YOUR_PATH_TO_THE_APP/Library_Management_CS4347/frontend/library-management/src/db/load.sql;
+- Go to “system variables”
+- Select Path
+- Click Edit
+- Click browse and find the php folder you installed, and add it
+
+9. php.ini
+
+- within the php folder, there should be a php.ini-development file
+- Rename that file to php.ini
+- Open php.ini
+- Find ‘ ;extension_dir = "ext" ‘
+- Remove the ‘ ; ‘
+- Find ‘ ;extension=mysqli ‘
+- Remove the ‘ ; ‘
+- Save the file
+
+10. Open the terminal within the frontend/library-management/src/app folder
+
+- Run php -S localhost:8000 in order to run the php database server
+
+**MySQL**  
+11. Open mysql command line  
+12. Login with the credentials:
+
+- Name: localhost
+- Password: 1234
+
+13. Outside of the terminal, copy all of the csv files within the directory db/csv over to the ‘ ProgramData/MySQL/MySQL Server 9.3/Uploads/ ‘ folder
+14. Back to the mysql command line, run the commands:
+
+- CREATE DATABASE librarymanagement;
+- USE librarymanagement;
+- SOURCE C:/Users/PUT_YOUR_PATH_TO_THE_APP/Library_Management_CS4347/frontend/library-management/src/db/create.sql;
+- SOURCE C:/Users/PUT_YOUR_PATH_TO_THE_APP/Library_Management_CS4347/frontend/library-management/src/db/load.sql;
 
 # How to Use the Library Management System
 
