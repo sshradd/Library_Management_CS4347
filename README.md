@@ -1,5 +1,3 @@
-README
-
 
 How to Install (on Windows)
 Next.js/website
