@@ -1,0 +1,24 @@
+Creating test database:
+CREATE DATABASE librarymanagement;
+USE librarymanagement;
+SOURCE C:/Users/sneha/Documents/SNEHA/UTDALLAS/CS4347/Library_Management_CS4347/frontend/library-management/src/db/create.sql;
+SOURCE C:/Users/sneha/Documents/SNEHA/UTDALLAS/CS4347/Library_Management_CS4347/frontend/library-management/src/db/load.sql;
+
+a) SELECT
+
+    alice.smith@example.com'-- 
+    alice.smith@example.com'#
+    xyz@gmail.com' OR 1=1 -- 
+
+
+b) UPDATE
+
+    a'; DROP DATABASE librarymanagement; #
+
+    a'; 
+    UPDATE PATRON
+    SET Password = '1234'
+    WHERE Email = 'alice.smith@example.com'
+    ; #
+
+
